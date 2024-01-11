@@ -58,6 +58,32 @@
             </field>
         </record>
 
+        <!-- search view definition -->
+        <record id="estate_search" model="ir.ui.view">
+            <field name="name">estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search string="Search Property">
+                    <field name="name" string="Name"
+                        filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self), ('postcode', 'ilike', self), ('date_availability', 'ilike', self), ('expected_price', 'ilike', self)]" />
+                    <field name="description" string="Description" />
+                    <field name="postcode" string="Postcode" />
+                    <field name="date_availability" string="Availability Date" />
+                    <field name="expected_price" string="Expected Price" />
+                    <field name="selling_price" string="Selling Price" />
+                    <field name="bedrooms" string="Bedrooms" />
+                    <field name="living_area" string="Living Area" />
+                    <field name="facades" string="Facades" />
+                    <field name="garage" string="Garage" />
+                    <field name="garden" string="Garden" />
+                    <field name="garden_area" string="Garden Area" />
+                    <field name="garden_orientation" string="Garden Orientation"
+                        widget="selection" />
+                </search>
+            </field>
+        </record>
+
+
         <!-- Action of the menu -->
         <record id="estate_action" model="ir.actions.act_window">
             <field name="name">Estate</field>
