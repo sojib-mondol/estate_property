@@ -9,6 +9,7 @@ class EstateProperty(models.Model):
 
     name = fields.Char("Estate Name", required=True, translate=True)
     description = fields.Char("Estate Description", required=True)
+   
     postcode = fields.Char("Post Code", required=True)
     date_availability = fields.Date("Date Availability")
     expected_price = fields.Float("Expected Price")
@@ -19,6 +20,14 @@ class EstateProperty(models.Model):
     garage = fields.Boolean("Garage")
     garden = fields.Boolean("Garden")
     garden_area = fields.Integer("Garden Area")
+    total_area = fields.Integer("total_area", compute="_compute_total_area")
+
+    @api.depends('living_area', 'garden_area')
+    def _compute_total_area(self):
+        for property_record in self:
+            property_record.total_area = property_record.living_area + property_record.garden_area
+
+    
 
     GARDEN_ORIENTATION_SELECTION = [
         ("north", "North"),
