@@ -27,7 +27,11 @@ class EstateProperty(models.Model):
         for property_record in self:
             property_record.total_area = property_record.living_area + property_record.garden_area
 
-    
+    @api.onchange('garden')
+    def _onchange_garden_area_orientation(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = 'north'
 
     GARDEN_ORIENTATION_SELECTION = [
         ("north", "North"),
