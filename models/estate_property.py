@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, api, tools
-
+from odoo import fields, models, api, tools, exceptions
+from odoo.exceptions import UserError
 
 class EstateProperty(models.Model):
     _name = "estate.property"
@@ -21,6 +21,12 @@ class EstateProperty(models.Model):
     garden = fields.Boolean("Garden")
     garden_area = fields.Integer("Garden Area")
     total_area = fields.Integer("total_area", compute="_compute_total_area")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('sold', 'Sold'),
+        ('canceled', 'Canceled'),
+    ], string='Status', default='draft', readonly=True)
+
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -47,3 +53,13 @@ class EstateProperty(models.Model):
     garden_orientation = fields.Selection(
         string="Garden Orientation", selection=GARDEN_ORIENTATION_SELECTION
     )
+
+def action_cancel_property(self):
+        if self.state == 'sold':
+            raise exceptions.UserError("You cannot cancel a property that has been sold.")
+        self.state = 'canceled'
+
+def action_sell_property(self):
+        if self.state == 'canceled':
+            raise exceptions.UserError("You cannot sell a property that has been canceled.")
+        self.state = 'sold'
