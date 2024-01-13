@@ -3,13 +3,14 @@
 from odoo import fields, models, api, tools, exceptions
 from odoo.exceptions import UserError
 
+
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property"
 
     name = fields.Char("Estate Name", required=True, translate=True)
     description = fields.Char("Estate Description", required=True)
-   
+
     postcode = fields.Char("Post Code", required=True)
     date_availability = fields.Date("Date Availability")
     expected_price = fields.Float("Expected Price")
@@ -21,23 +22,29 @@ class EstateProperty(models.Model):
     garden = fields.Boolean("Garden")
     garden_area = fields.Integer("Garden Area")
     total_area = fields.Integer("total_area", compute="_compute_total_area")
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('sold', 'Sold'),
-        ('canceled', 'Canceled'),
-    ], string='Status', default='draft', readonly=True)
+    state = fields.Selection(
+        [
+            ("draft", "Draft"),
+            ("sold", "Sold"),
+            ("canceled", "Canceled"),
+        ],
+        string="Status",
+        default="draft",
+        readonly=True,
+    )
 
-
-    @api.depends('living_area', 'garden_area')
+    @api.depends("living_area", "garden_area")
     def _compute_total_area(self):
         for property_record in self:
-            property_record.total_area = property_record.living_area + property_record.garden_area
+            property_record.total_area = (
+                property_record.living_area + property_record.garden_area
+            )
 
-    @api.onchange('garden')
+    @api.onchange("garden")
     def _onchange_garden_area_orientation(self):
         if self.garden:
             self.garden_area = 10
-            self.garden_orientation = 'north'
+            self.garden_orientation = "north"
 
     GARDEN_ORIENTATION_SELECTION = [
         ("north", "North"),
@@ -54,12 +61,14 @@ class EstateProperty(models.Model):
         string="Garden Orientation", selection=GARDEN_ORIENTATION_SELECTION
     )
 
+
 def action_cancel_property(self):
-        if self.state == 'sold':
-            raise exceptions.UserError("You cannot cancel a property that has been sold.")
-        self.state = 'canceled'
+    if self.state == "sold":
+        raise exceptions.UserError("You cannot cancel a property that has been sold.")
+    self.state = "canceled"
+
 
 def action_sell_property(self):
-        if self.state == 'canceled':
-            raise exceptions.UserError("You cannot sell a property that has been canceled.")
-        self.state = 'sold'
+    if self.state == "canceled":
+        raise exceptions.UserError("You cannot sell a property that has been canceled.")
+    self.state = "sold"
