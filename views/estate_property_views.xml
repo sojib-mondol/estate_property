@@ -46,13 +46,8 @@
                             <field name="state" />
 
 
-                           
-                            <button name="action_cancel_property" string="Cancel Property"
-                                type="object" class="oe_highlight"
-                                attrs="{'invisible': [('state', '=', 'sold')]}" />
-                            <button name="action_sell_property" string="Sell Property" type="object"
-                                class="oe_highlight"
-                                attrs="{'invisible': [('state', '=', 'canceled')]}" />
+                            <!-- <button name="action_cancel_property" string="Cancel Property" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'sold')]}" /> -->
+                            <!-- <button name="action_sell_property" string="Sell Property" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'canceled')]}" /> -->
 
                         </group>
                         <group>
@@ -64,6 +59,8 @@
                             <field name="total_area" />
                             <field name="garden_orientation" />
                         </group>
+                        <field name="buyer_id" widget="many2one" />
+                        <field name="salesperson_id" widget="many2one" />
                     </group>
                 </sheet>
             </form>
@@ -76,8 +73,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Search Property">
-                <field name="name" string="Name"
-                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self), ('postcode', 'ilike', self), ('date_availability', 'ilike', self), ('expected_price', 'ilike', self)]" />
+                <field name="name" string="Name" filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self), ('postcode', 'ilike', self), ('date_availability', 'ilike', self), ('expected_price', 'ilike', self)]" />
                 <field name="description" string="Description" />
                 <field name="postcode" string="Postcode" />
                 <field name="date_availability" string="Availability Date" />
@@ -91,8 +87,7 @@
                 <field name="garage" string="Garage" />
                 <field name="garden" string="Garden" />
                 <field name="garden_area" string="Garden Area" />
-                <field name="garden_orientation" string="Garden Orientation"
-                    widget="selection" />
+                <field name="garden_orientation" string="Garden Orientation" widget="selection" />
             </search>
         </field>
     </record>
