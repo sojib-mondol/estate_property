@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="estate_property_type_views" model="ir.ui.view">
+        <field name="name">estate.property.type.tree</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree string="Property Type">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <field name="name"> Estate Property Type </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+</odoo>
