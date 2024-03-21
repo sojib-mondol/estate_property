@@ -4,6 +4,7 @@ from odoo import fields, models, api, tools, exceptions
 from odoo.exceptions import UserError
 
 
+
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property"
@@ -33,7 +34,7 @@ class EstateProperty(models.Model):
         readonly=True,
     )
 
-    best_price = fields.Integer("Best Price", compute="_compute_best_price")
+    best_price = fields.Integer("Best Price")
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
     buyer_id = fields.Many2one("res.users", string="Buyer", default= lambda self: self.env.uid)
     salesperson_id = fields.Many2one("res.partner", string="Sales person")
