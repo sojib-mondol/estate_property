@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- Kanban view definition -->
+    <record id="estate_kanban" model="ir.ui.view">
+        <field name="name">estate.property.kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_res_partner_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_primary">
+                                <div class="o_field_widget">
+                                    <field name="name" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <!-- tree view definition -->
 
     <record id="estate_tree" model="ir.ui.view">
@@ -106,7 +128,7 @@
         <field name="name">Estate</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Create a new quotation, the first step of a
                 new sale!</p>
