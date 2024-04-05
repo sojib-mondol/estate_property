@@ -22,6 +22,8 @@
         </field>
     </record>
 
+   
+
     <!-- tree view definition -->
 
     <record id="estate_tree" model="ir.ui.view">
