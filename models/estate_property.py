@@ -10,6 +10,7 @@ class EstateProperty(models.Model):
     _description = "Estate Property"
 
     name = fields.Char("Estate Name", required=True, translate=True)
+    new_name = fields.Char("New Estate Name")
     description = fields.Char("Estate Description", required=True)
 
     postcode = fields.Char("Post Code", required=True)
